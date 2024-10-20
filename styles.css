@@ -1,0 +1,197 @@
+/* Reset some default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Full height layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif; /* Modern and clean font */
+}
+
+/* Basic body styling */
+body {
+    background-color: #ffffff; /* White background for contrast */
+    color: #333; /* Dark text for readability */
+    flex: 1;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #FBBC09; /* Primary theme color */
+    color: white;
+}
+
+/* Logo Styling */
+.logo {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+.logo img {
+    width: 200px; /* Adjust the width to fit your design */
+    height: auto;
+}
+
+/* Navigation Menu */
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white; /* White links for contrast */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Banner Section */
+.banner {
+    background: linear-gradient(rgba(251, 188, 9, 0.8), rgba(251, 188, 9, 0.8)), url('banner-image.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 3em 0;
+}
+
+.banner h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.banner p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.banner button {
+    background-color: white; /* White button for contrast */
+    color: #FBBC09; /* Yellow text */
+    padding: 10px 20px;
+    border: 2px solid #FBBC09;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.banner button:hover {
+    background-color: #FBBC09; /* Inverted hover effect */
+    color: white;
+}
+
+/* Featured Products Section */
+.featured-products {
+    padding: 3em;
+    text-align: center;
+    background-color: #f9f9f9; /* Light grey for subtle contrast */
+}
+
+.featured-products h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    color: #FBBC09; /* Yellow heading */
+}
+
+.product-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 1.5em;
+    flex-wrap: wrap;
+}
+
+/* Individual Product Styling */
+.product-item {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-10px);
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.product-item h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #FBBC09; /* Yellow product names */
+}
+
+.product-item p {
+    font-size: 1.1em;
+    color: #FBBC09; /* Yellow prices */
+    font-weight: 600;
+}
+
+.product-item button {
+    background-color: #FBBC09; /* Yellow button */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-item button:hover {
+    background-color: #e6a200; /* Slightly darker yellow on hover */
+}
+
+/* Footer Styling */
+footer {
+    background-color: #FBBC09; /* Yellow footer */
+    color: white;
+    text-align: center;
+    padding: 1.5em 0;
+    margin-top: auto;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .product-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .banner h2 {
+        font-size: 1.8em;
+    }
+
+    .banner p {
+        font-size: 1em;
+    }
+
+    .banner button {
+        font-size: 0.9em;
+    }
+}
