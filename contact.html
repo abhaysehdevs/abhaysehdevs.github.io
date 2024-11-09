@@ -5,25 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - GharDazzle</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #e9ecef, #ffffff);
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #FBBC09;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FBBC09; /* Change color on hover */
+        }
+
+        section {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h2:hover {
+            color: #FBBC09; /* Change color on hover */
+        }
+
+    </style>
 </head>
 <body>
     <header>
-        <h1>GharDazzle</h1>
+        <div class="logo">
+            <a href="index.html">
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 150px; height: auto;">
+            </a>
+        </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
+                <li><a href="products.html">Shop</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li>
+                    <a href="cart.html" class="cart">
+                        <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
+
     <section>
-        <h2>Contact Us</h2>
-        <p>If you have any questions, feel free to reach out to us via email at ghardazzle@gmail.com or call us at +919811539510.</p>
+        <h2 onclick="toggleContactInfo()">Contact Us</h2>
+        <p id="contact-info">If you have any questions, feel free to reach out to us via email at <a href="mailto:ghardazzle@gmail.com">ghardazzle@gmail.com</a> or call us at +919811539510.</p>
     </section>
+
     <footer>
         <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
+        <div class="logo">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo">
+        </div>
     </footer>
+
 </body>
 </html>
