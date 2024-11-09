@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - GharDazzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script> <!-- Ensure scripts.js is loaded -->
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+        </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="cart.html" class="cart">
+                        <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
+                        <span class="cart-count">0</span> <!-- This is for displaying item count -->
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="cart-section">
+        <div class="container">
+            <h2>Your Shopping Cart</h2>
+
+            <!-- Cart Items will appear here -->
+            <div class="cart-items">
+                <p>Your cart is currently empty.</p>
+            </div>
+
+            <div class="cart-total">
+                <h3>Total: ₹<span class="total-price">0.00</span></h3>
+                <button id="empty-cart-btn" class="empty-cart-btn" onclick="emptyCart()">Empty Cart</button> <!-- Added id to empty cart button -->
+                <button id="checkout-btn" class="checkout-btn" onclick="window.location.href='checkout.html'">Proceed to Checkout</button> <!-- Added id to checkout button -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 GharDazzle. All Rights Reserved.</p>
+        <div class="logo">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+        </div>
+    </footer>
+
+</body>
+</html>
