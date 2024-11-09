@@ -6,24 +6,69 @@
     <title>GharDazzle - Your Home Decor & Appliances Destination</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="scripts.js"></script>
+    <script>
+        // JavaScript to handle login and logout visibility
+        function loginUser(event) {
+            event.preventDefault();
+            // Simulate user login - set a flag in local storage
+            localStorage.setItem('isLoggedIn', 'true');
+            updateHeaderLinks();
+        }
+
+        function logoutUser() {
+            // Clear login flag and update header links
+            localStorage.removeItem('isLoggedIn');
+            updateHeaderLinks();
+        }
+
+        function updateHeaderLinks() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            document.getElementById('user-link').style.display = isLoggedIn ? 'none' : 'inline';
+            document.querySelector('.logout-link').style.display = isLoggedIn ? 'inline' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', updateHeaderLinks);
+    </script>
 </head>
 <body>
     <!-- Header -->
     <header>
         <div class="logo">
+            <a href="index.html">
             <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+        </a>
         </div>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" id="user-link">Login/Register</a></li>
+                <li><a href="#" class="logout-link" style="display:none;" onclick="logoutUser()">Logout</a></li>
+                <li>
+                    <a href="cart.html" class="cart">
+                        <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
-    
 
+    <!-- Login Form -->
+    <section id="login-section">
+        <div class="login-container">
+            <h2>Login to Your Account</h2>
+            <form id="login-register-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button onclick="loginUser(event)">Login</button>
+            </form>
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+    </section>
+    
     <!-- Banner -->
     <section class="banner">
         <h2>Discover Stylish & Affordable Home Decor</h2>
@@ -39,19 +84,19 @@
                 <img src="product1.jpg" alt="Product 1">
                 <h3>Stylish Sofa Set</h3>
                 <p>₹15,000</p>
-                <button onclick="addToCart('Stylish Sofa Set')">Add to Cart</button>
+                <button onclick="addToCart('Stylish Sofa Set', 15000)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="product2.jpg" alt="Product 2">
                 <h3>Modern Floor Lamp</h3>
                 <p>₹3,500</p>
-                <button onclick="addToCart('Modern Floor Lamp')">Add to Cart</button>
+                <button onclick="addToCart('Modern Floor Lamp', 3500)">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="product3.jpg" alt="Product 3">
                 <h3>Decorative Wall Mirror</h3>
                 <p>₹2,800</p>
-                <button onclick="addToCart('Decorative Wall Mirror')">Add to Cart</button>
+                <button onclick="addToCart('Decorative Wall Mirror', 2800)">Add to Cart</button>
             </div>
         </div>
     </section>
@@ -59,7 +104,9 @@
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
+        <div class="logo">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+        </div>
     </footer>
-    
 </body>
 </html>
