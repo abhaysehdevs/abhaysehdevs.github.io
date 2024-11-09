@@ -8,22 +8,39 @@
 </head>
 <body>
     <header>
-        <h1>GharDazzle</h1>
+        <div class="logo">
+            <a href="index.html">
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 150px; height: auto;">
+            </a>
+        </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
+                <li><a href="products.html">Shop</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li>
+                    <a href="cart.html" class="cart">
+                        <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
+
     <section>
-        <h2>Contact Us</h2>
-        <p>If you have any questions, feel free to reach out to us via email at ghardazzle@gmail.com or call us at +919811539510.</p>
+        <h2 onclick="toggleContactInfo()">Contact Us</h2>
+        <p id="contact-info">If you have any questions, feel free to reach out to us via email at <a href="mailto:ghardazzle@gmail.com">ghardazzle@gmail.com</a> or call us at +919811539510.</p>
     </section>
+
     <footer>
         <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
+        <div class="logo">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo">
+        </div>
     </footer>
+
 </body>
 </html>
