@@ -1,8 +1,65 @@
-// Initialize an empty array to hold cart items or load existing items from localStorage
+// Initialize cart items and orders, loading existing data from localStorage if available
 let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 let userOrders = JSON.parse(localStorage.getItem('userOrders')) || [];
 
-// Function to add an item to the cart
+// Function to fetch products from Google Sheets
+async function fetchProductsFromGoogleSheets() {
+    const spreadsheetId = '1vH5wJLo5IxxvA4xDt5mU-0WYFSD0-kaFe11yUI8K9Y4';
+    const range = 'Sheet1!A1:W17';
+    const apiKey = 'YOUR_API_KEY';
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        console.log('Fetched Data:', data); // Debugging statement
+
+        if (data && data.values) {
+            const products = data.values.map(row => ({
+                id: row[0],
+                name: row[1],
+                price: row[2],
+                description: row[3],
+                imageUrl: row[4],
+                inventoryCount: row[5]
+            }));
+            displayProducts(products);
+        } else {
+            console.error('No product data found.');
+        }
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+// Function to display products on the page
+function displayProducts(products) {
+    const productContainer = document.querySelector('.product-grid');
+    if (!productContainer) {
+        console.error('Product grid container not found.');
+        return;
+    }
+    productContainer.innerHTML = ''; // Clear any existing products
+
+    products.forEach(product => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product-item');
+        productItem.innerHTML = `
+            <img src="${product.imageUrl}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p>Price: ₹${product.price}</p>
+            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+        `;
+        productContainer.appendChild(productItem);
+    });
+}
+
+// Call fetch function on page load
+document.addEventListener('DOMContentLoaded', fetchProductsFromGoogleSheets);
+
+// Function to add items to the cart
 function addToCart(productName, price) {
     const existingItemIndex = cartItems.findIndex(item => item.name === productName);
     
@@ -14,29 +71,28 @@ function addToCart(productName, price) {
     
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCartCount();
+    console.log(`${productName} added to cart with price ${price}`);
     alert(`${productName} has been added to your cart!`);
 }
 
-// Function to update the cart item count displayed on the cart icon
+// Function to update cart item count
 function updateCartCount() {
     const cartCountElement = document.querySelector('.cart-count');
     const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     cartCountElement.textContent = totalCount;
 }
 
-// Function to load cart items on the cart page and update checkout button status
+// Function to load cart items and update checkout button status
 function loadCartItems() {
     const cartItemsContainer = document.querySelector('.cart-items');
     const cartTotalElement = document.querySelector('.total-price');
-    const checkoutBtn = document.getElementById('checkout-btn'); // Assuming you have an ID for the checkout button
+    const checkoutBtn = document.getElementById('checkout-btn');
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
 
     if (cartItems.length === 0) {
         cartItemsContainer.innerHTML = '<p>Your cart is currently empty.</p>';
-
-        // Disable checkout button if cart is empty
         if (checkoutBtn) {
             checkoutBtn.classList.add('disabled');
             checkoutBtn.disabled = true;
@@ -52,8 +108,7 @@ function loadCartItems() {
             cartItemsContainer.appendChild(itemElement);
             total += item.price * item.quantity;
         });
-
-        // Enable checkout button if cart has items
+        
         if (checkoutBtn) {
             checkoutBtn.classList.remove('disabled');
             checkoutBtn.disabled = false;
@@ -65,7 +120,7 @@ function loadCartItems() {
     }
 }
 
-// Function to remove an item from the cart
+// Function to remove item from cart
 function removeFromCart(index) {
     if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
@@ -178,6 +233,7 @@ function loginUser(event) {
     }
 }
 
+// Check if the login form is hidden when logged in
 function checkLoginStatus() {
     const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
     const userLink = document.getElementById('user-link');
@@ -188,12 +244,12 @@ function checkLoginStatus() {
         userLink.textContent = 'Dashboard';
         userLink.href = 'dashboard.html';
         logoutLink.style.display = 'block';
-        loginForm.style.display = 'none';
+        if (loginForm) loginForm.style.display = 'none';
     } else {
         userLink.textContent = 'Login/Register';
         userLink.href = 'login.html';
         logoutLink.style.display = 'none';
-        loginForm.style.display = 'flex';
+        if (loginForm) loginForm.style.display = 'flex';
     }
 }
 

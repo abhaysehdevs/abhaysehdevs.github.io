@@ -70,7 +70,7 @@ header nav ul li a:hover {
 }
 
 /* Centering the login section */
-#login-section {
+.login-section {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +87,7 @@ header nav ul li a:hover {
 }
 
 /* Styling form elements */
-#login-register-form input {
+.login-container input {
     width: 100%; /* Full width of the container */
     padding: 10px;
     margin: 10px 0;
@@ -95,7 +95,7 @@ header nav ul li a:hover {
     border-radius: 4px;
 }
 
-#login-register-form button {
+.login-container button {
     width: 100%;
     padding: 10px;
     background-color: #FBBC09;
@@ -105,13 +105,13 @@ header nav ul li a:hover {
     cursor: pointer;
 }
 
-#login-register-form button:hover {
+.login-container button:hover {
     background-color: #FBBC09;
 }
 
 /* Banner Section */
 .banner {
-    background: linear-gradient(rgba(251, 188, 9, 0.8), rgba(251, 188, 9, 0.8)), url('banner-image.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgb(255, 224, 139), #ffc935), url('banner-image.jpg') no-repeat center center/cover;
     color: white;
     text-align: center;
     padding: 3em 0;
