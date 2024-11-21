@@ -2,63 +2,6 @@
 let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 let userOrders = JSON.parse(localStorage.getItem('userOrders')) || [];
 
-// Function to fetch products from Google Sheets
-async function fetchProductsFromGoogleSheets() {
-    const spreadsheetId = '1vH5wJLo5IxxvA4xDt5mU-0WYFSD0-kaFe11yUI8K9Y4';
-    const range = 'Sheet1!A1:W17';
-    const apiKey = 'YOUR_API_KEY';
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        
-        console.log('Fetched Data:', data); // Debugging statement
-
-        if (data && data.values) {
-            const products = data.values.map(row => ({
-                id: row[0],
-                name: row[1],
-                price: row[2],
-                description: row[3],
-                imageUrl: row[4],
-                inventoryCount: row[5]
-            }));
-            displayProducts(products);
-        } else {
-            console.error('No product data found.');
-        }
-    } catch (error) {
-        console.error('Error fetching products:', error);
-    }
-}
-
-// Function to display products on the page
-function displayProducts(products) {
-    const productContainer = document.querySelector('.product-grid');
-    if (!productContainer) {
-        console.error('Product grid container not found.');
-        return;
-    }
-    productContainer.innerHTML = ''; // Clear any existing products
-
-    products.forEach(product => {
-        const productItem = document.createElement('div');
-        productItem.classList.add('product-item');
-        productItem.innerHTML = `
-            <img src="${product.imageUrl}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
-        `;
-        productContainer.appendChild(productItem);
-    });
-}
-
-// Call fetch function on page load
-document.addEventListener('DOMContentLoaded', fetchProductsFromGoogleSheets);
-
 // Function to add items to the cart
 function addToCart(productName, price) {
     const existingItemIndex = cartItems.findIndex(item => item.name === productName);
@@ -87,15 +30,18 @@ function loadCartItems() {
     const cartItemsContainer = document.querySelector('.cart-items');
     const cartTotalElement = document.querySelector('.total-price');
     const checkoutBtn = document.getElementById('checkout-btn');
+    const checkoutCartTotal = document.getElementById('cart-totalP');
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
 
     if (cartItems.length === 0) {
         cartItemsContainer.innerHTML = '<p>Your cart is currently empty.</p>';
-        if (checkoutBtn) {
-            checkoutBtn.classList.add('disabled');
-            checkoutBtn.disabled = true;
+        if (checkoutCartTotal) {
+            // checkoutBtn.classList.add('disabled');
+            // checkoutBtn.disabled = true;
+            // checkoutCartTotal.classList.add('display');
+            checkoutCartTotal.style.display = 'none';
         }
     } else {
         cartItems.forEach((item, index) => {
@@ -103,7 +49,11 @@ function loadCartItems() {
             itemElement.classList.add('cart-item');
             itemElement.innerHTML = `
                 <p><strong>${item.name}</strong> - ₹${item.price} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>
-                <button onclick="removeFromCart(${index})">Remove</button>
+                 <div class="cart-controls">
+                    <button onclick="decreaseQuantity(${index})">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="increaseQuantity(${index})">+</button>
+                </div>
             `;
             cartItemsContainer.appendChild(itemElement);
             total += item.price * item.quantity;
@@ -120,12 +70,20 @@ function loadCartItems() {
     }
 }
 
-// Function to remove item from cart
-function removeFromCart(index) {
+// Function to increase the quantity of an item
+function increaseQuantity(index) {
+    cartItems[index].quantity += 1;
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCartCount();
+    loadCartItems();
+}
+
+// Function to decrease the quantity of an item
+function decreaseQuantity(index) {
     if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
     } else {
-        cartItems.splice(index, 1);
+        cartItems.splice(index, 1); // Remove item if quantity becomes 0
     }
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCartCount();
@@ -334,4 +292,80 @@ function initFeaturedProducts() {
 // Initialize featured products if on the homepage
 if (document.title === 'GharDazzle - Home') { // Replace with the actual title of your homepage
     initFeaturedProducts();
+}
+function updateCart(productName, price, action) {
+    const productQuantityElement = document.getElementById(`${productName}-quantity`);
+    let productQuantity = parseInt(productQuantityElement.textContent);
+
+    if (action === 'increment') {
+        productQuantity += 1;
+        addToCart(productName, price);
+    } else if (action === 'decrement' && productQuantity > 0) {
+        productQuantity -= 1;
+        removeFromCartByName(productName);
+    }
+
+    productQuantityElement.textContent = productQuantity;
+}
+
+// Function to remove one item by product name
+function removeFromCartByName(productName) {
+    const productIndex = cartItems.findIndex(item => item.name === productName);
+    if (productIndex !== -1) {
+        if (cartItems[productIndex].quantity > 1) {
+            cartItems[productIndex].quantity -= 1;
+        } else {
+            cartItems.splice(productIndex, 1);
+        }
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateCartCount();
+    }
+}
+function buyNow(productName, price) {
+    // Create a temporary cart with only this product
+    const temporaryCart = [{ name: productName, price: price, quantity: 1 }];
+    localStorage.setItem('temporaryCart', JSON.stringify(temporaryCart));
+
+    // Redirect to checkout page
+    window.location.href = 'checkout.html';
+}
+function updateCart(productName, price, action) {
+    const quantitySpan = document.getElementById(`${productName}-quantity`);
+    const buyNowButton = document.getElementById(`${productName}-buy`);
+
+    let quantity = parseInt(quantitySpan.textContent);
+
+    if (action === 'increment') {
+        quantity++;
+    } else if (action === 'decrement' && quantity > 0) {
+        quantity--;
+    }
+
+    // Update quantity display
+    quantitySpan.textContent = quantity;
+
+    // Enable or disable the "Buy Now" button
+    if (quantity > 0) {
+        buyNowButton.classList.remove('disabled');
+        buyNowButton.disabled = false;
+    } else {
+        buyNowButton.classList.add('disabled');
+        buyNowButton.disabled = true;
+    }
+
+    // Add or remove the product from the cart
+    if (quantity > 0) {
+        const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+        if (existingItemIndex > -1) {
+            cartItems[existingItemIndex].quantity = quantity;
+        } else {
+            cartItems.push({ name: productName, price: price, quantity: quantity });
+        }
+    } else {
+        cartItems = cartItems.filter(item => item.name !== productName);
+    }
+
+    // Save updated cart to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCartCount();
 }

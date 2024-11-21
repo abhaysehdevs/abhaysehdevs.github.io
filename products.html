@@ -8,32 +8,71 @@
     <script defer src="scripts.js"></script>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="logo">
+        <div class="logo-container">
             <a href="index.html">
-            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
-        </a>
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" class="animated-logo">
+            </a>
         </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Shop</a></li>
+                <li><a href="products.html" class="active">Shop</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="login.html" id="user-link">Login/Register</a></li>
                 <li>
                     <a href="cart.html" class="cart">
                         <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
-                        <span class="cart-count">0</span> <!-- This is for displaying item count -->
+                        <span class="cart-count">0</span>
                     </a>
                 </li>
             </ul>
         </nav>
     </header>
 
-    <section class="product-grid"></section>
-    <script src="scripts.js"></script>
+    <!-- Products Section -->
+    <section class="products-section">
+        <h2>Our Products</h2>
+        <div class="product-grid">
+            <div class="product-item">
+                <img src="product1.jpg" alt="Product 1">
+                <h3>Stylish Sofa Set</h3>
+                <p>₹15,000</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('Stylish Sofa Set', 15000, 'decrement')">-</button>
+                    <span id="Stylish Sofa Set-quantity">0</span>
+                    <button onclick="updateCart('Stylish Sofa Set', 15000, 'increment')">+</button>
+                </div>
+                <button id="Stylish Sofa Set-buy" class="buy-now-btn disabled" disabled onclick="buyNow('Stylish Sofa Set', 15000)">Buy Now</button>
+            </div>
+            <div class="product-item">
+                <img src="product2.jpg" alt="Product 2">
+                <h3>Modern Floor Lamp</h3>
+                <p>₹3,500</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('Modern Floor Lamp', 3500, 'decrement')">-</button>
+                    <span id="Modern Floor Lamp-quantity">0</span>
+                    <button onclick="updateCart('Modern Floor Lamp', 3500, 'increment')">+</button>
+                </div>
+                <button id="Modern Floor Lamp-buy" class="buy-now-btn disabled" disabled onclick="buyNow('Modern Floor Lamp', 3500)">Buy Now</button>
+            </div>
+            <div class="product-item">
+                <img src="product3.jpg" alt="Product 3">
+                <h3>Decorative Wall Mirror</h3>
+                <p>₹2,800</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('Decorative Wall Mirror', 2800, 'decrement')">-</button>
+                    <span id="Decorative Wall Mirror-quantity">0</span>
+                    <button onclick="updateCart('Decorative Wall Mirror', 2800, 'increment')">+</button>
+                </div>
+                <button id="Decorative Wall Mirror-buy" class="buy-now-btn disabled" disabled onclick="buyNow('Decorative Wall Mirror', 2800)">Buy Now</button>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
         <div class="logo">

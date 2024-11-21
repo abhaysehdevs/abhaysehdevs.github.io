@@ -3,41 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management</title>
-    <link rel="stylesheet" href="style2.css"> <!-- Link to your CSS file -->
+    <title>Products - GharDazzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <h1>Inventory Management</h1>
+        <div class="logo">
+            <a href="index.html">
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+            </a>
+        </div>
         <nav>
-            <a href="products.html">Products Page</a>
-            <a href="login.html">Login</a>
-            <a href="logout.html">Logout</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html" class="active">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" id="user-link">Login/Register</a></li>
+                <li>
+                    <a href="cart.html" class="cart">
+                        <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
         </nav>
     </header>
-    <main>
-        <h2>Manage Products</h2>
-        <form id="product-form">
-            <input type="text" id="product-name" placeholder="Product Name" required>
-            <input type="number" id="product-quantity" placeholder="Quantity" required>
-            <input type="number" id="product-price" placeholder="Price" required>
-            <button type="submit">Add Product</button>
-        </form>
-        <h3>Current Inventory</h3>
-        <table id="inventory-table">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Inventory items will be populated here -->
-            </tbody>
-        </table>
-    </main>
-    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <h2>Our Products</h2>
+        <div class="product-grid">
+            <div class="product-item">
+                <img src="product1.jpg" alt="Product 1">
+                <h3>Stylish Sofa Set</h3>
+                <p>₹15,000</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('Stylish Sofa Set', 15000, 'decrement')">-</button>
+                    <span id="Stylish Sofa Set-quantity">0</span>
+                    <button onclick="updateCart('Stylish Sofa Set', 15000, 'increment')">+</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="product2.jpg" alt="Product 2">
+                <h3>Modern Floor Lamp</h3>
+                <p>₹3,500</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('Modern Floor Lamp', 3500, 'decrement')">-</button>
+                    <span id="Modern Floor Lamp-quantity">0</span>
+                    <button onclick="updateCart('Modern Floor Lamp', 3500, 'increment')">+</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="product3.jpg" alt="Product 3">
+                <h3>Decorative Wall Mirror</h3>
+                <p>₹2,800</p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart('Decorative Wall Mirror', 2800, 'decrement')">-</button>
+                    <span id="Decorative Wall Mirror-quantity">0</span>
+                    <button onclick="updateCart('Decorative Wall Mirror', 2800, 'increment')">+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
+        <div class="logo">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+        </div>
+    </footer>
 </body>
 </html>
