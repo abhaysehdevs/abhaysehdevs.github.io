@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Preview - GharDazzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" class="bouncing-logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" id="user-link">Login/Register</a></li>
+                <li>
+                    <a href="cart.html" class="cart">
+                        <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Product Preview Section -->
+    <section class="product-preview">
+        <div class="product-container">
+            <div class="product-image">
+                <img id="product-image" src="" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <h1 id="product-name">Product Name</h1>
+                <p id="product-description">This is a detailed description of the product. It highlights features, specifications, and more information about the item.</p>
+                <p id="product-price" class="price">Price: ₹<span>0</span></p>
+                <div class="quantity-controls">
+                    <button onclick="updateCart(selectedProduct.name, selectedProduct.price, 'decrement')">-</button>
+                    <span id="selected-product-quantity">0</span>
+                    <button onclick="updateCart(selectedProduct.name, selectedProduct.price, 'increment')">+</button>
+                </div>
+                <button id="buy-now-btn" class="buy-now-btn disabled" disabled onclick="buyNow(selectedProduct.name, selectedProduct.price)">Buy Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended Products Section -->
+    <section class="recommended-products">
+        <h2>Recommended Products</h2>
+        <div class="product-grid" id="recommended-products">
+            <!-- Recommended products will be dynamically added here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
+        <div class="logo">
+            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px; height: auto;">
+        </div>
+    </footer>
+</body>
+</html>

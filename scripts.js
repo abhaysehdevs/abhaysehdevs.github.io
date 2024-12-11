@@ -369,3 +369,73 @@ function updateCart(productName, price, action) {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCartCount();
 }
+// Selected Product Data
+let selectedProduct = {};
+
+// Function to load product details into the preview page
+function loadProductDetails() {
+    // Retrieve the product data from localStorage (passed from products.html)
+    const productData = JSON.parse(localStorage.getItem('selectedProduct'));
+    if (productData) {
+        selectedProduct = productData;
+
+        // Populate the preview page
+        document.getElementById('product-image').src = productData.imageUrl;
+        document.getElementById('product-name').textContent = productData.name;
+        document.getElementById('product-description').textContent = productData.description;
+        document.getElementById('product-price').querySelector('span').textContent = productData.price;
+
+        // Initialize the quantity and disable the "Buy Now" button
+        document.getElementById('selected-product-quantity').textContent = 0;
+        const buyNowBtn = document.getElementById('buy-now-btn');
+        buyNowBtn.classList.add('disabled');
+        buyNowBtn.disabled = true;
+    } else {
+        console.error('No product data found!');
+    }
+}
+
+// Function to display recommended products
+function displayRecommendedProducts() {
+    const recommendedContainer = document.getElementById('recommended-products');
+    const recommendedProducts = [
+        { name: "Product 2", price: 3500, imageUrl: "product2.jpg" },
+        { name: "Product 3", price: 2800, imageUrl: "product3.jpg" },
+    ];
+
+    recommendedProducts.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.classList.add('product-item');
+        productElement.innerHTML = `
+            <img src="${product.imageUrl}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>Price: ₹${product.price}</p>
+            <button onclick="viewProduct('${product.name}', ${product.price}, '${product.imageUrl}')">View</button>
+        `;
+        recommendedContainer.appendChild(productElement);
+    });
+}
+
+// Function to save selected product and navigate to the preview page
+function viewProduct(name, price, imageUrl) {
+    const productData = {
+        name: name,
+        price: price,
+        imageUrl: imageUrl,
+        description: "This is a placeholder description. Replace it with dynamic data."
+    };
+
+    // Save selected product to localStorage
+    localStorage.setItem('selectedProduct', JSON.stringify(productData));
+
+    // Navigate to the preview page
+    window.location.href = 'product-preview.html';
+}
+
+// Call the loadProductDetails function when the page is loaded
+document.addEventListener('DOMContentLoaded', function () {
+    if (document.title === 'Product Preview - GharDazzle') {
+        loadProductDetails();
+        displayRecommendedProducts();
+    }
+});
