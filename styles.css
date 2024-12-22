@@ -478,6 +478,12 @@ footer {
     .banner button {
         font-size: 0.9em;
     }
+    .container {
+        padding: 1.5em;
+    }
+    .checkout-cart h3, .checkout-form h3 {
+        font-size: 1.5em;
+    }
 }
 .buy-now-btn {
     margin-top: 10px;
@@ -509,18 +515,6 @@ footer {
     animation: rotate-logo 3s infinite ease-in-out; /* Infinite animation loop */
 }
 
-/* Keyframes for logo animation */
-@keyframes rotate-logo {
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
-    50% {
-        transform: rotate(360deg) scale(1.1);
-    }
-    100% {
-        transform: rotate(0deg) scale(1);
-    }
-}
 .buy-now-btn.disabled {
     background-color: #ccc; /* Grey background */
     color: #666; /* Grey text */
@@ -605,4 +599,124 @@ footer {
     justify-content: center;
     gap: 1.5em;
     flex-wrap: wrap;
+}
+/* Checkout Section Styling */
+.checkout-section {
+    padding: 3em;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-cart, .checkout-form {
+    margin-bottom: 2em;
+}
+
+.checkout-cart h3, .checkout-form h3 {
+    font-size: 1.8em;
+    color: #FBBC09;
+    margin-bottom: 15px;
+}
+
+.cart-items p, .input-group label {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.checkout-btn {
+    background-color: #FBBC09;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.1em;
+}
+.checkout-btn:hover {
+    background-color: #e6a200;
+}
+
+/* Cart Items Styling */
+.cart-items div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-total {
+    font-size: 1.5em;
+    color: #333;
+}
+/* Checkout Progress Tracker */
+.checkout-progress ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.checkout-progress ul li {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #f3f3f3;
+    color: #666;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.checkout-progress ul li.active {
+    background-color: #FBBC09;
+    color: white;
+}
+
+/* Payment Methods */
+.payment-methods {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.payment-methods ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.payment-methods ul li img {
+    width: 80px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.payment-methods ul li img:hover {
+    transform: scale(1.1);
+}
+
+/* Checkout Button Disabled State */
+.checkout-btn.disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
 }

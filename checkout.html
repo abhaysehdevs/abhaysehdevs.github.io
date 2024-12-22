@@ -12,7 +12,9 @@
     <!-- Header -->
     <header>
         <div class="logo">
-            <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px;">
+            <a href="index.html">
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" style="width: 200px;">
+            </a>
         </div>
         <nav>
             <ul>
@@ -34,52 +36,81 @@
     <!-- Checkout Section -->
     <section class="checkout-section">
         <div class="container">
-            <h2>Checkout</h2>
+            <h2>Complete Your Purchase</h2>
+
+            <!-- Progress Tracker -->
+            <div class="checkout-progress">
+                <ul>
+                    <li class="active">Cart Summary</li>
+                    <li>Shipping Information</li>
+                    <li>Payment Details</li>
+                </ul>
+            </div>
 
             <!-- Cart Summary -->
             <div class="checkout-cart">
                 <h3>Your Cart</h3>
                 <div class="cart-items">
-                    <!-- Cart items will be loaded dynamically -->
+                    <!-- Cart items will be dynamically loaded here -->
                 </div>
                 <div class="cart-total">
                     <h3>Total: <span class="total-price">0</span></h3>
                 </div>
             </div>
 
-            <!-- Shipping Information Form -->
+            <!-- Shipping Information -->
             <div class="checkout-form">
                 <h3>Shipping Information</h3>
                 <form onsubmit="submitOrder(event)">
                     <div class="input-group">
                         <label for="name">Full Name:</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
                     </div>
                     <div class="input-group">
                         <label for="address">Address:</label>
-                        <input type="text" id="address" name="address" required>
+                        <input type="text" id="address" name="address" required placeholder="Enter your address">
                     </div>
                     <div class="input-group">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" required>
+                        <input type="text" id="city" name="city" required placeholder="Enter your city">
                     </div>
                     <div class="input-group">
                         <label for="postal-code">Postal Code:</label>
-                        <input type="text" id="postal-code" name="postal-code" required>
+                        <input type="text" id="postal-code" name="postal-code" required placeholder="Enter your postal code">
                     </div>
                     <div class="input-group">
                         <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" required>
+                        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                     </div>
+                    <div class="input-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+            <!-- Payment Method Section -->
+            <div class="payment-method">
+                <h3>Payment Method</h3>
+                <label>
+                    <input type="radio" name="payment-method" value="razorpay" checked>
+                    Razorpay
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="payment-method" value="paypal">
+                    PayPal
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="payment-method" value="cod">
+                    Cash on Delivery
+                </label>
+            </div>
                     <button type="submit" class="checkout-btn">Place Order</button>
                 </form>
             </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 GharDazzle. All Rights Reserved.</p>
+        <p>Privacy Policy | Terms of Service | Refund Policy</p>
     </footer>
 
 </body>

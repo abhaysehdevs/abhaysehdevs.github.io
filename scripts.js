@@ -131,6 +131,7 @@ function proceedToCheckout() {
     }
 }
 
+
 // Function to submit the order on checkout page
 function submitOrder(event) {
     event.preventDefault();
@@ -439,3 +440,21 @@ document.addEventListener('DOMContentLoaded', function () {
         displayRecommendedProducts();
     }
 });
+// Function to manage the "Place Order" button state
+function managePlaceOrderButton() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const placeOrderButton = document.querySelector('.checkout-btn');
+
+    if (cartItems.length === 0) {
+        placeOrderButton.disabled = true; // Disable button
+        placeOrderButton.classList.add('disabled'); // Add disabled styling
+        placeOrderButton.title = 'Your cart is empty. Please add items to place an order.';
+    } else {
+        placeOrderButton.disabled = false; // Enable button
+        placeOrderButton.classList.remove('disabled'); // Remove disabled styling
+        placeOrderButton.title = ''; // Remove tooltip
+    }
+}
+
+// Call the function on page load
+document.addEventListener('DOMContentLoaded', managePlaceOrderButton);
