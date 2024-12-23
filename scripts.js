@@ -370,76 +370,6 @@ function updateCart(productName, price, action) {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCartCount();
 }
-// Selected Product Data
-let selectedProduct = {};
-
-// Function to load product details into the preview page
-function loadProductDetails() {
-    // Retrieve the product data from localStorage (passed from products.html)
-    const productData = JSON.parse(localStorage.getItem('selectedProduct'));
-    if (productData) {
-        selectedProduct = productData;
-
-        // Populate the preview page
-        document.getElementById('product-image').src = productData.imageUrl;
-        document.getElementById('product-name').textContent = productData.name;
-        document.getElementById('product-description').textContent = productData.description;
-        document.getElementById('product-price').querySelector('span').textContent = productData.price;
-
-        // Initialize the quantity and disable the "Buy Now" button
-        document.getElementById('selected-product-quantity').textContent = 0;
-        const buyNowBtn = document.getElementById('buy-now-btn');
-        buyNowBtn.classList.add('disabled');
-        buyNowBtn.disabled = true;
-    } else {
-        console.error('No product data found!');
-    }
-}
-
-// Function to display recommended products
-function displayRecommendedProducts() {
-    const recommendedContainer = document.getElementById('recommended-products');
-    const recommendedProducts = [
-        { name: "Product 2", price: 3500, imageUrl: "product2.jpg" },
-        { name: "Product 3", price: 2800, imageUrl: "product3.jpg" },
-    ];
-
-    recommendedProducts.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.classList.add('product-item');
-        productElement.innerHTML = `
-            <img src="${product.imageUrl}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>Price: ₹${product.price}</p>
-            <button onclick="viewProduct('${product.name}', ${product.price}, '${product.imageUrl}')">View</button>
-        `;
-        recommendedContainer.appendChild(productElement);
-    });
-}
-
-// Function to save selected product and navigate to the preview page
-function viewProduct(name, price, imageUrl) {
-    const productData = {
-        name: name,
-        price: price,
-        imageUrl: imageUrl,
-        description: "This is a placeholder description. Replace it with dynamic data."
-    };
-
-    // Save selected product to localStorage
-    localStorage.setItem('selectedProduct', JSON.stringify(productData));
-
-    // Navigate to the preview page
-    window.location.href = 'product-preview.html';
-}
-
-// Call the loadProductDetails function when the page is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    if (document.title === 'Product Preview - GharDazzle') {
-        loadProductDetails();
-        displayRecommendedProducts();
-    }
-});
 // Function to manage the "Place Order" button state
 function managePlaceOrderButton() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -458,3 +388,73 @@ function managePlaceOrderButton() {
 
 // Call the function on page load
 document.addEventListener('DOMContentLoaded', managePlaceOrderButton);
+
+// Product data for demonstration
+const products = {
+    product1: {
+        name: 'Stylish Sofa Set',
+        price: 15000,
+        description: 'A comfortable and stylish sofa set for your living room.',
+        imageUrl: 'product1.jpg',
+    },
+    product2: {
+        name: 'Modern Floor Lamp',
+        price: 3500,
+        description: 'A sleek lamp for modern interiors.',
+        imageUrl: 'product2.jpg',
+    },
+    product3: {
+        name: 'Decorative Wall Mirror',
+        price: 2800,
+        description: 'A beautiful mirror to enhance your wall decor.',
+        imageUrl: 'product3.jpg',
+    },
+};
+
+// Redirect to product preview page
+function redirectToProductPreview(productId) {
+    window.location.href = `product_preview.html?product=${productId}`;
+}
+
+// Load product details dynamically in the preview page
+function loadProductDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('product');
+    const product = products[productId];
+
+    if (product) {
+        document.querySelector('.product-image').src = product.imageUrl;
+        document.querySelector('.product-name').textContent = product.name;
+        document.querySelector('.product-price').textContent = `₹${product.price}`;
+        document.querySelector('.product-description').textContent = product.description;
+    } else {
+        document.querySelector('.product-preview').innerHTML = '<p>Product not found.</p>';
+    }
+}
+
+// Add to Cart from the preview page
+function addToCartFromPreview() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('product');
+    const product = products[productId];
+
+    if (product) {
+        addToCart(product.name, product.price);
+    }
+}
+
+// Buy Now functionality
+function buyNow() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('product');
+    const product = products[productId];
+
+    if (product) {
+        alert(`Proceeding to checkout for ${product.name}`);
+        // Redirect to checkout page or handle purchase
+        window.location.href = 'checkout.html';
+    }
+}
+
+// Load product details on preview page
+document.addEventListener('DOMContentLoaded', loadProductDetails);

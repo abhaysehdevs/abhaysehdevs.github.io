@@ -17,7 +17,6 @@ body {
     background-color: #ffffff;
     color: #333;
     flex: 1;
-    cursor: url("image.png"), auto;
     scroll-behavior: smooth;
     transition: all 0.3s ease;
 }
@@ -44,31 +43,38 @@ header {
     border-bottom: 2px solid #ddd;
     animation: fadeIn 1s ease-in;
 }
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Optional, makes the container take full viewport height */
+}
 
-/* Logo Styling */
-.logo img {
-    width: 180px;
-    height: auto;
-    align-content: center;
+.logo-container img {
+    max-width: 400px; /* Adjust the size of your logo as needed */
+    
 }
 
 /* Navigation Menu */
 header nav ul {
     display: flex;
     list-style: none;
-    gap: 20px;
+    gap: 30px;
 }
 
 header nav ul li a {
-    color: #333;
     text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease, transform 0.3s ease;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;  /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header nav ul li a:hover {
-    color: #FBBC09;
-    transform: translateY(-2px);
+    color: #333;
+    background-color: #FBBC09;
 }
 
 /* Login Section Centering */
@@ -499,20 +505,6 @@ footer {
 
 .buy-now-btn:hover {
     background-color: #C70039; /* Darker red on hover */
-}
-/* Center the logo in the header */
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-}
-
-/* Animated logo styling */
-.animated-logo {
-    width: 200px; /* Adjust size */
-    height: auto;
-    animation: rotate-logo 3s infinite ease-in-out; /* Infinite animation loop */
 }
 
 .buy-now-btn.disabled {
