@@ -718,9 +718,8 @@ footer {
 @media (max-width: 768px) {
     header {
         height: auto; /* Automatically adjust height */
-        padding: 10px 15px; /* Add spacing for better visuals */
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     }
 
