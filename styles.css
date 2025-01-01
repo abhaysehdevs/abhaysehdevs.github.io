@@ -724,7 +724,7 @@ footer {
     }
 
     nav ul {
-        flex-direction: column; /* Stack menu items vertically */
+        flex-direction: row; /* Stack menu items vertically */
         text-align: center;
         padding: 0;
     }
