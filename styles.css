@@ -122,7 +122,9 @@ header nav ul li a:hover {
 
 /* Banner Section */
 .banner {
-    background: linear-gradient(rgba(255, 224, 139, 0.8), #ffc935), url('banner-image.jpg') no-repeat center/cover;
+    background-image: url('banner.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
     color: #333;
     text-align: center;
     padding: 60px 20px;
