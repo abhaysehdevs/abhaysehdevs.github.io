@@ -268,47 +268,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartCount();
     checkLoginStatus();
 });
-
-// Function to initialize featured products
-function initFeaturedProducts() {
-    const products = [
-        { name: "Product 1", price: 999.99 },
-        { name: "Product 2", price: 1499.99 },
-        { name: "Product 3", price: 1999.99 }
-    ];
-
-    const featuredContainer = document.querySelector('.featured-products');
-    products.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.classList.add('product-item');
-        productElement.innerHTML = `
-            <h3>${product.name}</h3>
-            <p>Price: ₹${product.price}</p>
-            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
-        `;
-        featuredContainer.appendChild(productElement);
-    });
-}
-
-// Initialize featured products if on the homepage
-if (document.title === 'GharDazzle - Home') { // Replace with the actual title of your homepage
-    initFeaturedProducts();
-}
-function updateCart(productName, price, action) {
-    const productQuantityElement = document.getElementById(`${productName}-quantity`);
-    let productQuantity = parseInt(productQuantityElement.textContent);
-
-    if (action === 'increment') {
-        productQuantity += 1;
-        addToCart(productName, price);
-    } else if (action === 'decrement' && productQuantity > 0) {
-        productQuantity -= 1;
-        removeFromCartByName(productName);
-    }
-
-    productQuantityElement.textContent = productQuantity;
-}
-
 // Function to remove one item by product name
 function removeFromCartByName(productName) {
     const productIndex = cartItems.findIndex(item => item.name === productName);
@@ -388,7 +347,6 @@ function managePlaceOrderButton() {
 
 // Call the function on page load
 document.addEventListener('DOMContentLoaded', managePlaceOrderButton);
-
 // Product data for demonstration
 const products = {
     product1: {
@@ -413,6 +371,7 @@ const products = {
 
 // Redirect to product preview page
 function redirectToProductPreview(productId) {
+    console.log(`Redirecting to product preview with ID: ${productId}`);
     window.location.href = `product_preview.html?product=${productId}`;
 }
 
@@ -420,7 +379,10 @@ function redirectToProductPreview(productId) {
 function loadProductDetails() {
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('product');
+    console.log('Extracted Product ID:', productId);
+
     const product = products[productId];
+    console.log('Fetched Product Data:', product);
 
     if (product) {
         document.querySelector('.product-image').src = product.imageUrl;
@@ -428,6 +390,7 @@ function loadProductDetails() {
         document.querySelector('.product-price').textContent = `₹${product.price}`;
         document.querySelector('.product-description').textContent = product.description;
     } else {
+        console.error('Product not found for ID:', productId);
         document.querySelector('.product-preview').innerHTML = '<p>Product not found.</p>';
     }
 }
@@ -437,6 +400,8 @@ function addToCartFromPreview() {
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('product');
     const product = products[productId];
+
+    console.log('Adding to cart:', product);
 
     if (product) {
         addToCart(product.name, product.price);
@@ -448,6 +413,8 @@ function buyNow() {
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('product');
     const product = products[productId];
+
+    console.log('Buy Now for Product:', product);
 
     if (product) {
         alert(`Proceeding to checkout for ${product.name}`);

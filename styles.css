@@ -718,13 +718,14 @@ footer {
 @media (max-width: 768px) {
     header {
         height: auto; /* Automatically adjust height */
+        padding: 10px 15px; /* Add spacing for better visuals */
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
     }
 
     nav ul {
-        flex-direction: row; /* Stack menu items vertically */
+        flex-direction: column; /* Stack menu items vertically */
         text-align: center;
         padding: 0;
     }
