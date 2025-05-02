@@ -4,12 +4,12 @@ let userOrders = JSON.parse(localStorage.getItem('userOrders')) || [];
 
 // Function to add items to the cart
 function addToCart(productName, price) {
-    const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+    const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
     
     if (existingItemIndex > -1) {
         cartItems[existingItemIndex].quantity += 1;
     } else {
-        cartItems.push({ name: productName, price: price, quantity: 1 });
+        cartItems.push({ id: product.id, name: productName, price: price, quantity: 1 });
     }
     
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -289,21 +289,21 @@ function buyNow(productName, price) {
     // Redirect to checkout page
     window.location.href = 'checkout.html';
 }
-function updateCart(productName, price, action) {
+function updateCart(productId, productName, productPrice, action) {
     const quantitySpan = document.getElementById(`${productName}-quantity`);
     const buyNowButton = document.getElementById(`${productName}-buy`);
-
+    
     let quantity = parseInt(quantitySpan.textContent);
-
+    
     if (action === 'increment') {
         quantity++;
     } else if (action === 'decrement' && quantity > 0) {
         quantity--;
     }
-
+    
     // Update quantity display
     quantitySpan.textContent = quantity;
-
+    
     // Enable or disable the "Buy Now" button
     if (quantity > 0) {
         buyNowButton.classList.remove('disabled');
@@ -312,20 +312,19 @@ function updateCart(productName, price, action) {
         buyNowButton.classList.add('disabled');
         buyNowButton.disabled = true;
     }
-
-    // Add or remove the product from the cart
+    
+    // Use the product id consistently to check/add the item in the cart
     if (quantity > 0) {
-        const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+        const existingItemIndex = cartItems.findIndex(item => item.id === productId);
         if (existingItemIndex > -1) {
             cartItems[existingItemIndex].quantity = quantity;
         } else {
-            cartItems.push({ name: productName, price: price, quantity: quantity });
+            cartItems.push({ id: productId, name: productName, price: productPrice, quantity: quantity });
         }
     } else {
-        cartItems = cartItems.filter(item => item.name !== productName);
+        cartItems = cartItems.filter(item => item.id !== productId);
     }
-
-    // Save updated cart to localStorage
+    
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     updateCartCount();
 }
@@ -345,83 +344,141 @@ function managePlaceOrderButton() {
     }
 }
 
-// Call the function on page load
-document.addEventListener('DOMContentLoaded', managePlaceOrderButton);
-// Product data for demonstration
-const products = {
-    product1: {
-        name: 'Stylish Sofa Set',
-        price: 15000,
-        description: 'A comfortable and stylish sofa set for your living room.',
-        imageUrl: 'product1.jpg',
-    },
-    product2: {
-        name: 'Modern Floor Lamp',
-        price: 3500,
-        description: 'A sleek lamp for modern interiors.',
-        imageUrl: 'product2.jpg',
-    },
-    product3: {
-        name: 'Decorative Wall Mirror',
-        price: 2800,
-        description: 'A beautiful mirror to enhance your wall decor.',
-        imageUrl: 'product3.jpg',
-    },
-};
+// Updated search function in scripts.js
+function searchProducts() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const resultsContainer = document.querySelector('.search-results') || document.getElementById('product-container');
+    
+    if (!products) {
+        alert("Products not loaded yet");
+        return;
+    }
 
-// Redirect to product preview page
-function redirectToProductPreview(productId) {
-    console.log(`Redirecting to product preview with ID: ${productId}`);
-    window.location.href = `product_preview.html?product=${productId}`;
-}
+    const results = products.filter(product => 
+        product.name.toLowerCase().includes(query)
+    );
 
-// Load product details dynamically in the preview page
-function loadProductDetails() {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('product');
-    console.log('Extracted Product ID:', productId);
+    if (!resultsContainer) return;
 
-    const product = products[productId];
-    console.log('Fetched Product Data:', product);
+    resultsContainer.innerHTML = '';
 
-    if (product) {
-        document.querySelector('.product-image').src = product.imageUrl;
-        document.querySelector('.product-name').textContent = product.name;
-        document.querySelector('.product-price').textContent = `₹${product.price}`;
-        document.querySelector('.product-description').textContent = product.description;
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<p>No products found.</p>';
+        return;
+    }
+
+    // Use different rendering for index vs products page
+    if (window.location.pathname.includes('products.html')) {
+        renderProducts(results);
     } else {
-        console.error('Product not found for ID:', productId);
-        document.querySelector('.product-preview').innerHTML = '<p>Product not found.</p>';
+        results.forEach(product => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+            resultItem.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>Price: ₹${product.price}</p>
+                <button onclick="location.href='products.html#${product.id}'">View Product</button>
+            `;
+            resultsContainer.appendChild(resultItem);
+        });
     }
 }
 
-// Add to Cart from the preview page
-function addToCartFromPreview() {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('product');
-    const product = products[productId];
+async function fetchShippingRates() {
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRMTumET1mizWIlRiXoO47xREKfxI3UZ0g-GbtcfAKUQAtKe4k2Cz1KuL3o59mp3GDoHp6VDDwYL7vV/pub?output=csv";
 
-    console.log('Adding to cart:', product);
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const rows = text.split("\n").map(row => row.split(",")); // Convert CSV to an array
 
-    if (product) {
-        addToCart(product.name, product.price);
+        const shippingRates = {};
+        rows.forEach((row, index) => {
+            if (index === 0) return; // Skip the header row
+            const city = row[0]?.trim().toLowerCase();
+            const charge = row[1]?.trim();
+            const deliveryTime = row[2]?.trim(); // Assuming the 3rd column contains estimated delivery time
+
+            if (city && charge && !isNaN(charge) && deliveryTime) {
+                shippingRates[city] = {
+                    charge: parseFloat(charge), // Convert charge to number
+                    time: deliveryTime // Store estimated delivery time
+                };
+            }
+        });
+
+        // Store shipping rates globally
+        window.shippingRates = shippingRates;
+
+    } catch (error) {
+        console.error("Error fetching shipping rates:", error);
+        document.getElementById("delivery-charge").value = "Error";
     }
 }
 
-// Buy Now functionality
-function buyNow() {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('product');
-    const product = products[productId];
+document.addEventListener("DOMContentLoaded", () => {
+    fetchShippingRates();
+});
 
-    console.log('Buy Now for Product:', product);
+function updateEstimatedDeliveryTime() {
+    const city = document.getElementById("city").value.toLowerCase();
+    const estimatedTimeElement = document.getElementById("estimated-delivery-time");
 
-    if (product) {
-        alert(`Proceeding to checkout for ${product.name}`);
-        // Redirect to checkout page or handle purchase
-        window.location.href = 'checkout.html';
+    if (window.shippingRates && window.shippingRates[city]) {
+        estimatedTimeElement.textContent = `Estimated Delivery: ${window.shippingRates[city].time}`;
+    } else {
+        estimatedTimeElement.textContent = "Delivery Time: Not Available";
     }
 }
 
-// Load product details on preview page
-document.addEventListener('DOMContentLoaded', loadProductDetails);
+function updateShippingCharge() {
+    const city = document.getElementById("city").value.toLowerCase();
+    const deliveryChargeInput = document.getElementById("delivery-charge");
+
+    if (window.shippingRates && window.shippingRates[city]) {
+        deliveryChargeInput.value = `₹${window.shippingRates[city].charge}`;
+    } else {
+        deliveryChargeInput.value = "Not Available";
+    }
+}
+
+// Attach event listeners to city dropdown
+document.getElementById("city").addEventListener("change", updateEstimatedDeliveryTime);
+document.getElementById("city").addEventListener("change", updateShippingCharge);
+
+function notifyWhatsApp(orderDetails) {
+    const phone = "919811539510"; // Your WhatsApp number with country code
+    const message = encodeURIComponent(
+        `📢 New Order Received! \n\n${orderDetails}`
+    );
+
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+}
+
+// Modify `submitOrder()` to send WhatsApp notification
+function submitOrder(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const address = document.getElementById("address").value;
+    const city = document.getElementById("city").value;
+    const phone = document.getElementById("phone").value;
+    const totalAmount = document.querySelector(".total-price").textContent;
+
+    const orderDetails = `
+    Name: ${name}
+    Address: ${address}
+    City: ${city}
+    Phone: ${phone}
+    Total: ${totalAmount}
+    `;
+
+    notifyWhatsApp(orderDetails);
+    alert("Your order has been placed!");
+}
+
+function openQuickView(productId) {
+    console.log("Opening quick view for product id:", productId);
+    window.location.href = `productview.html?id=${productId}`;
+}

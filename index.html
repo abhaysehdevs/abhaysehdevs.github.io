@@ -6,7 +6,8 @@
     <meta name="description" content="Explore GharDazzle's collection of stylish home appliances and decor. Shop for sofas, lamps, mirrors, home appliances and more at affordable prices.">
     <meta name="keywords" content="home appliances, home decor, GharDazzle, ghar dazzle, Ghar dazzle, Ghar dazzle, Ghar dazle, home decoration, decoration, affordable home appliances, home Appliances ">
     <meta name="author" content="GharDazzle">
-    <title>GharDazzle - Your Home Decor & Appliances Destination</title>
+    <title>Ghar Dazzle</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="styles.css">
     <script defer src="scripts.js"></script>
     <script>
@@ -47,66 +48,118 @@
                 <li><a href="products.html" class="active">Shop</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.html" id="user-link">Login/Register</a></li>
+                <li>
+                    <a href="login.html" class="profile">
+                        <img src="login.png" alt="profile" class="profile" style="width: 30px; height: auto;">
+                </a>
+                </li>
                 <li>
                     <a href="cart.html" class="cart">
                         <img src="cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px; height: auto;">
                         <span class="cart-count">0</span>
                     </a>
                 </li>
+                <li><a href="wishlist.html" class="active">Wishlist ❤️</a></li>
             </ul>
         </nav>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for products...">
+            <button onclick="searchProducts()">Search</button>
+        </div>        
     </header>
     
     <!-- Banner -->
     <section class="banner">
-        <section id="login-section">
-            <div class="login-container" style="margin: auto;">
-                <h2 style="color: #fbbc09;">Login to Your Account</h2>
-                <form id="login-register-form">
-                    <input type="email" id="email" placeholder="Email" required>
-                    <input type="password" id="password" placeholder="Password" required>
-                    <button onclick="loginUser(event)">Login</button>
-                </form>
-                <p>Don't have an account? <a href="register.html">Register here</a></p>
-            </div>
-        </section>
+        <h1>Welcome to GharDazzle!</h1>
         <button onclick="window.location.href='products.html'" style="margin-top: 1rem;">Shop Now</button>
     </section>
 
-    <!-- Featured Products -->
-    <section class="featured-products">
-        <h2>Featured Products</h2>
-        <div class="product-grid">
-            <div class="product-item">
-                <img src="product1.jpg" alt="Product 1">
-                <h3>Stylish Sofa Set</h3>
-                <p>₹15,000</p>
-                <button onclick="addToCart('Stylish Sofa Set', 15000)">Buy Now</button>
-            </div>
-            <div class="product-item">
-                <img src="product2.jpg" alt="Product 2">
-                <h3>Modern Floor Lamp</h3>
-                <p>₹3,500</p>
-                <button onclick="addToCart('Modern Floor Lamp', 3500)">Buy Now</button>
-            </div>
-            <div class="product-item">
-                <img src="product3.jpg" alt="Product 3">
-                <h3>Decorative Wall Mirror</h3>
-                <p>₹2,800</p>
-                <button onclick="addToCart('Decorative Wall Mirror', 2800)">Buy Now</button>
-            </div>
+<!-- Categories Section -->
+<div class="categories-banner">
+    <h2>Shop by Category</h2>
+    <div class="categories-container">
+        <div class="category-item">
+            <a href="products.html?category=sofa">
+                <img src="sofa.jpeg" alt="sofas">
+                <p>Sofas</p>
+            </a>
         </div>
-    </section>
+        <div class="category-item">
+            <a href="products.html?category=lamps">
+                <img src="lamp.jpeg" alt="Lamps">
+                <p>Lamps</p>
+            </a>
+        </div>
+        <div class="category-item">
+            <a href="products.html?category=decor">
+                <img src="decor.jpeg" alt="Decor">
+                <p>Decor</p>
+            </a>
+        </div>
+        <div class="category-item">
+            <a href="products.html?category=chairs">
+                <img src="chair.jpeg" alt="Chairs">
+                <p>Chairs</p>
+            </a>
+        </div>
+        <div class="category-item">
+            <a href="products.html?category=carpet">
+                <img src="carpet.jpg" alt="Chairs">
+                <p>Chairs</p>
+            </a>
+        </div>
+        <div class="category-item">
+            <a href="products.html?category=wallart">
+                <img src="wallart.jpeg" alt="Chairs">
+                <p>Chairs</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+    <div class="search-results"></div>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 GharDazzle - All Rights Reserved.</p>
-        <nav>
-            <a href="Privacypolicy.html">Privacy Policy  |  </a> 
-            <a href="refundpolicy.html">  Refund Policy  |  </a>
-            <a href="termsofservices.html">  Terms of Services </a>
-        </nav>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="ghardazzle-logo.png" alt="GharDazzle Logo" class="footer-logo">
+                <p>Your one-stop shop for stylish home decor and appliances. Transform your space with GharDazzle!</p>
+            </div>
+    
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: ghardazzle@gmail.com</p>
+                <p>Phone: +91 98115 39510</p>
+                <p>Address: Shahdara, Delhi, India</p>
+            </div>
+    
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><img src="Facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="Instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="Twitter.png" alt="Twitter"></a>
+                    <a href="#"><img src="Google.png" alt="Google"></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2024 GharDazzle. All Rights Reserved. | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p> | <a href="refundpolicy.html"> Refund Policy</a></p>
+        </div>
     </footer>
+    
 </body>
 </html>
